@@ -1,0 +1,14 @@
+productId;name;price;quantity
+M01;Monitor 27;32990;2
+K01;Keyboard;4490;3
+M01;Monitor 27;32990;1
+X01;Broken;-100;1
+M02;Monitor 27;32990;110
+M03;Monitor 27;32990;111
+K02;Keyboard;4490;0
+K03;Keyboard;4490;-1
+X02;Broken;0;1
+X03;;100;1
+;NoId;100;1
+M04;Monitor 27;32990;100
+M04;Monitor 27;32990;20

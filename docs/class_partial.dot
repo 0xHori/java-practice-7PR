@@ -1,0 +1,41 @@
+digraph C {
+    graph [rankdir=TB, bgcolor="white", pad=0.2, nodesep=0.35, ranksep=0.5];
+    node [shape=record, style="filled", fontname="Times New Roman", fontsize=10,
+          color="#2F5597", fillcolor="#F7FBFF"];
+    edge [fontname="Times New Roman", fontsize=9, color="#555555"];
+
+    p [label="{Product|- id : String\l- name : String\l- price : double\l|+ Product(id, name, price)\l+ getId() : String\l+ getName() : String\l+ getPrice() : double\l+ equals(o) : boolean\l+ hashCode() : int\l}"];
+
+    e [label="{Employee|«record»\l|+ id : String\l+ fullName : String\l|+ Employee(id, fullName)\l}"];
+
+    oi [label="{OrderItem|- product : Product\l- quantity : int\l|+ static MIN_QUANTITY : int = 1\l+ static MAX_QUANTITY : int = 110\l+ OrderItem(product, quantity)\l+ increase(delta : int) : void\l- static validateQuantity(quantity : int) : void\l+ getProduct() : Product\l+ getQuantity() : int\l+ getLineTotal() : double\l}"];
+
+    os [label="{OrderStatus|«enumeration»\l|DRAFT\lCONFIRMED\l}"];
+
+    o [label="{Order|- employee : Employee\l- items : List\<OrderItem\>\l- status : OrderStatus\l|+ Order(employee)\l+ addProduct(product, quantity) : void\l+ removeProduct(productId : String) : void\l+ total() : double\l+ confirm() : void\l+ getItems() : List\<OrderItem\>\l+ getStatus() : OrderStatus\l- ensureDraft() : void\l}"];
+
+    sv [label="{OrderService||+ createOrder(employee : Employee) : Order\l+ validateForConfirm(order : Order) : void\l}"];
+
+    app [label="{App|- static DEFAULT_ITEMS : String[]\l- static EMPLOYEE : Employee\l- static CATALOG : Product[]\l|+ static main(args : String[]) : void\l- static addLine(order : Order, line : String) : void\l- static findProduct(id : String) : Product\l}",
+         fillcolor="#E7F5E7", color="#2E7D32"];
+
+    s [label="{SelfCheck||+ static main(args : String[]) : void\l}",
+       fillcolor="#F4F4F4", color="#888888"];
+
+    o -> e    [label="1",     arrowtail=odiamond, dir=both];
+    o -> oi   [label="1..*",  arrowtail=diamond, dir=both];
+    oi -> p   [label="1",     arrowtail=odiamond, dir=both];
+    o -> os   [label="status", style=dashed, arrowhead=open];
+
+    sv -> o   [label="creates", style=dashed, arrowhead=open];
+
+    app -> sv  [label="uses",    style=dashed, arrowhead=open];
+    app -> o   [label="uses",    style=dashed, arrowhead=open];
+    app -> p   [label="CATALOG", style=dashed, arrowhead=open];
+    app -> e   [label="EMPLOYEE", style=dashed, arrowhead=open];
+
+    s -> p   [label="uses", style=dashed, arrowhead=open];
+    s -> oi  [label="uses", style=dashed, arrowhead=open];
+    s -> o   [label="uses", style=dashed, arrowhead=open];
+    s -> sv  [label="uses", style=dashed, arrowhead=open];
+}
